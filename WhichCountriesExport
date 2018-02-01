@@ -1,0 +1,52 @@
+import edu.duke.*;
+import org.apache.commons.csv.*;
+
+/**
+ * Write a description of WhichCountriesExport here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+
+
+public class WhichCountriesExport {
+    public void tester (){
+        FileResource fr = new FileResource();
+        CSVParser parser = fr.getCSVParser();
+        String countryInformation = countryInfo(parser, "Madagascar");
+        System.out.println(countryInformation);
+    }      
+    public String countryInfo(CSVParser parser, String country){     
+        for(CSVRecord record: parser){
+        String countries = record.get("Country");
+        
+        if(countries.contains(country)){
+            String export = record.get("Exports");
+            String value =  record.get("Value (dollars)");
+            String                                 vb countryInformation =country + " : " + export + " : " + value;
+            return countryInformation;
+        }
+    }
+    String error = "NOT FOUND";
+    return error;
+}
+public void listExporters(CSVParser parser, String exportOfInterest) {
+        //for each row in CSV File
+        for (CSVRecord record : parser) {
+            //look at the "Exports" column
+            String export = record.get("Exports");
+            //check if it contains exportOfInterest
+            if (export.contains(exportOfInterest)) {
+                //If so, write down the "Country" from that row
+                String country = record.get("Country");
+                System.out.println(country);
+            }
+        }
+    }
+    public void whoExportsCoffee() {
+        FileResource fr = new FileResource();
+        CSVParser parser= fr.getCSVParser();
+        listExporters(parser, "fuel");
+    }
+        
+}\
